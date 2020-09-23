@@ -1,34 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-import { v4 as uuidv4 } from "uuid";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-const ShoppingList = () => {
-  const [items, setItems] = useState([
-    { id: uuidv4(), name: "Eggs" },
-    { id: uuidv4(), name: "Milk" },
-    { id: uuidv4(), name: "Chips" },
-    { id: uuidv4(), name: "Sour Cream" },
-  ]);
+import { getItems, deleteItem } from "../actions/itemActions";
+import ItemModal from "./itemModal"
 
-  const handleClick = () => {
-    const name = prompt("Enter Item");
-    if (name) {
-      setItems([...items, { id: uuidv4(), name }]);
-    }
-  };
+const ShoppingList = (props) => {
+  // const [items, setItems] = useState([])
+
+  useEffect(() => {
+    props.getItems()
+  }, [])
+
+  // const handleClick = () => {
+  //   const name = prompt("Enter Item");
+  //   if (name) {
+  //     setItems([...items, { id: uuidv4(), name }]);
+  //   }
+  // };
 
   const handleClickDelete = (id) => {
-    setItems(items.filter(item => item.id !== id))
+    console.log("hit")
+    props.deleteItem(id);
   }
 
+  const { items } = props.items;
   return (
     <div>
       <Container>
-        <Button variant="outline-dark" onClick={handleClick}>
-          Add a Item
-        </Button>
+        <ItemModal />
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -43,7 +46,12 @@ const ShoppingList = () => {
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>
-                  <Button variant="danger" onClick={() => handleClickDelete(item.id)}>Delete</Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleClickDelete(item.id)}
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))}
@@ -54,4 +62,13 @@ const ShoppingList = () => {
   );
 };
 
-export default ShoppingList;
+ShoppingList.propTypes = {
+  getItems: PropTypes.func.isRequired,
+  items: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  items: state.itemReducer,
+})
+
+export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
