@@ -18,7 +18,7 @@ function ItemModal(props) {
     e.preventDefault();
 
     const newItem = {
-      id: uuidv4(),
+      // id: uuidv4(),
       name: name,
     };
 
@@ -27,6 +27,9 @@ function ItemModal(props) {
 
     // Close modal
     handleClose();
+
+    // Reset input field
+    setName("")
   };
 
   const handleChange = (e) => {

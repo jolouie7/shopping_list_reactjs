@@ -8,12 +8,11 @@ import PropTypes from "prop-types";
 import { getItems, deleteItem } from "../actions/itemActions";
 import ItemModal from "./itemModal"
 
-const ShoppingList = (props) => {
-  // const [items, setItems] = useState([])
+const ShoppingList = ({getItems, items, deleteItem}) => {
 
   useEffect(() => {
-    props.getItems()
-  }, [])
+    getItems();
+  }, [items.items]);
 
   // const handleClick = () => {
   //   const name = prompt("Enter Item");
@@ -24,10 +23,10 @@ const ShoppingList = (props) => {
 
   const handleClickDelete = (id) => {
     console.log("hit")
-    props.deleteItem(id);
+    deleteItem(id);
   }
 
-  const { items } = props.items;
+  const listItems = items.items;
   return (
     <div>
       <Container>
@@ -41,14 +40,14 @@ const ShoppingList = (props) => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
+            {listItems.map((item) => (
+              <tr key={item._id}>
+                <td>{item._id}</td>
                 <td>{item.name}</td>
                 <td>
                   <Button
                     variant="danger"
-                    onClick={() => handleClickDelete(item.id)}
+                    onClick={() => handleClickDelete(item._id)}
                   >
                     Delete
                   </Button>
