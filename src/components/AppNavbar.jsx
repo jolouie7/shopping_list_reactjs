@@ -11,12 +11,8 @@ const AppNavbar = () => {
           <Navbar.Brand href="/">Shopping List</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
-            </Nav>
-            <Nav>
-              <Nav.Link eventKey={2} href="#memes">
+            <Nav className="ml-auto">
+              <Nav.Link eventKey={2} href="#github">
                 Github
               </Nav.Link>
             </Nav>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
@@ -22,7 +22,6 @@ const ShoppingList = ({getItems, items, deleteItem}) => {
   // };
 
   const handleClickDelete = (id) => {
-    console.log("hit")
     deleteItem(id);
   }
 

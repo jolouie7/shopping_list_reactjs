@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import Form from "react-bootstrap/Form";
-import { v4 as uuidv4 } from "uuid";
 
 import { addItem } from "../actions/itemActions";
 
@@ -18,7 +17,6 @@ function ItemModal(props) {
     e.preventDefault();
 
     const newItem = {
-      // id: uuidv4(),
       name: name,
     };
 
