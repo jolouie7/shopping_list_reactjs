@@ -5,10 +5,12 @@ import {
   ITEMS_LOADING,
 } from "../constants/items";
 
+import backendHost from "../constants/api-config";
+
 export const getItems = () => {
   return (dispatch) => {
     dispatch(setItemsLoading());
-    fetch("https://shopping-list-mern-app-1.herokuapp.com/api/items")
+    fetch(backendHost)
       .then((res) => res.json())
       .then((data) =>
         dispatch({
@@ -24,7 +26,7 @@ export const getItems = () => {
 
 export const addItem = (item) => {
   return (dispatch) => {
-    fetch("https://shopping-list-mern-app-1.herokuapp.com/api/items", {
+    fetch(backendHost, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +48,7 @@ export const addItem = (item) => {
 
 export const deleteItem = (id) => {
   return (dispatch) => {
-    fetch(`https://shopping-list-mern-app-1.herokuapp.com/api/items/${id}`, {
+    fetch(`${backendHost}/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
