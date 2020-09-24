@@ -8,7 +8,7 @@ import {
 export const getItems = () => {
   return (dispatch) => {
     dispatch(setItemsLoading());
-    fetch("http://localhost:5000/api/items")
+    fetch("https://shopping-list-mern-app-1.herokuapp.com//api/items")
       .then((res) => res.json())
       .then((data) =>
         dispatch({
@@ -24,7 +24,7 @@ export const getItems = () => {
 
 export const addItem = (item) => {
   return (dispatch) => {
-    fetch("http://localhost:5000/api/items", {
+    fetch("https://shopping-list-mern-app-1.herokuapp.com//api/items", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const addItem = (item) => {
 
 export const deleteItem = (id) => {
   return (dispatch) => {
-    fetch(`http://localhost:5000/api/items/${id}`, {
+    fetch(`https://shopping-list-mern-app-1.herokuapp.com//api/items/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
