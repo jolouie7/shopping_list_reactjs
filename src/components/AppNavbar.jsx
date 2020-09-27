@@ -3,6 +3,9 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 
+import RegisterModal from "../components/auth/RegisterModal";
+import Logout from "../components/auth/Logout";
+
 const AppNavbar = () => {
   return (
     <div>
@@ -12,9 +15,8 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link eventKey={2} href="#github">
-                Github
-              </Nav.Link>
+              <RegisterModal />
+              <Logout />
             </Nav>
           </Navbar.Collapse>
         </Container>

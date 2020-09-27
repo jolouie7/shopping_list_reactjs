@@ -10,7 +10,7 @@ import backendHost from "../constants/api-config";
 export const getItems = () => {
   return (dispatch) => {
     dispatch(setItemsLoading());
-    fetch(backendHost)
+    fetch(`${backendHost}/api/items`)
       .then((res) => res.json())
       .then((data) =>
         dispatch({
@@ -26,7 +26,7 @@ export const getItems = () => {
 
 export const addItem = (item) => {
   return (dispatch) => {
-    fetch(backendHost, {
+    fetch(`${backendHost}/api/items`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const addItem = (item) => {
 
 export const deleteItem = (id) => {
   return (dispatch) => {
-    fetch(`${backendHost}/${id}`, {
+    fetch(`${backendHost}/api/items/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
