@@ -112,6 +112,38 @@ export const register = ({ name, username, email, password }) => (
     });
 };
 
+// Login User
+export const login = ({ username, password }) => (dispatch) => {
+  console.log("username: ", username);
+  console.log("password: ", password);
+  // Headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  // Request body
+  const body = JSON.stringify({ username, password });
+
+  axios
+    .post(`${backendHost}/api/auth/login`, body, config)
+    .then((res) =>
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
+      );
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+
 // Logout User
 export const logout = () => {
   return {

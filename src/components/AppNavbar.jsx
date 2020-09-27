@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 
 import RegisterModal from "../components/auth/RegisterModal";
+import LoginModal from "../components/auth/LoginModal";
 import Logout from "../components/auth/Logout";
 
 const AppNavbar = () => {
@@ -16,6 +17,7 @@ const AppNavbar = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto">
               <RegisterModal />
+              <LoginModal />
               <Logout />
             </Nav>
           </Navbar.Collapse>
