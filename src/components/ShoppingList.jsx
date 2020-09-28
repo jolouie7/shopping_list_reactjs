@@ -6,18 +6,27 @@ import { connect } from "react-redux";
 
 import { getItems, deleteItem } from "../actions/itemActions";
 import ItemModal from "./itemModal";
+import { getAllUsers } from "../actions/usersActions";
 
-const ShoppingList = ({ getItems, items, deleteItem, isAuthenticated }) => {
+const ShoppingList = ({
+  getItems,
+  items,
+  deleteItem,
+  isAuthenticated,
+  getAllUsers,
+}) => {
   useEffect(() => {
     getItems();
-  }, [items.items, getItems]);
+    getAllUsers();
+  // }, [items.items, getItems, getAllUsers]);
+  }, []);
 
   const handleClickDelete = (id) => {
     deleteItem(id);
   };
 
   const listItems = items.items;
-  
+
   return (
     <div>
       <Container>
@@ -59,4 +68,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.authReducer.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem, getAllUsers })(
+  ShoppingList
+);

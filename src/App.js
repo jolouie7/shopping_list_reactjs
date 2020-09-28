@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import AppNavbar from './components/AppNavbar';
 import ShoppingList from './components/ShoppingList';
 import { loadUser } from "./actions/authActions";
+import { getAllUsers } from "./actions/usersActions";
 
 function App({ isLoggedIn }) {
   useEffect(() => {
-    console.log(isLoggedIn);
     loadUser()
+    // getAllUsers();
   }, []);
 
   return (
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadUser: () => dispatch(loadUser()),
+  getAllUsers: () => dispatch(getAllUsers()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
