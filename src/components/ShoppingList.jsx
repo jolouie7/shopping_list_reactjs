@@ -12,7 +12,7 @@ const ShoppingList = ({getItems, items, deleteItem}) => {
 
   useEffect(() => {
     getItems();
-  }, []);
+  }, [getItems]);
 
   // const handleClick = () => {
   //   const name = prompt("Enter Item");

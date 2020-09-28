@@ -18,17 +18,16 @@ export const loadUser = () => {
   return (dispatch, getState) => {
     // User loading
     dispatch({ type: USER_LOADING });
+    debugger
 
-    fetch(`${backendHost}/api/auth/user`, tokenConfig(getState))
-      .then((res) => res.json())
-      .then((data) =>
+    axios.get(`${backendHost}/api/auth/user`, tokenConfig(getState))
+      .then((res) =>
         dispatch({
           type: USER_LOADED,
-          payload: data,
+          payload: res.data,
         })
       )
       .catch((error) => {
-        // console.error("Error:", error);
         dispatch(returnErrors(error.response.data, error.response.status));
         dispatch({
           type: AUTH_ERROR,
@@ -38,52 +37,9 @@ export const loadUser = () => {
 };
 
 // Register User
-// export const register = ({ name, username, email, password }) => {
-//   return (dispatch) => {
-//     // Headers
-//     const config = {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json"
-//       }
-//     }
-
-//     // Request body
-//     const body = JSON.stringify({ name, username, email, password });
-
-//     fetch(`${backendHost}/api/auth`, body, config)
-//       .then((res) => res.json())
-//       .then((data) => {
-//         dispatch({
-//           type: REGISTER_SUCCESS,
-//           payload: data,
-//         });
-//       })
-//       .catch((error) => {
-//         console.log(error.response);
-//         console.log(error.res)
-//         console.log(error)
-//         dispatch(
-//           // fix this, not hitting the backend
-//           returnErrors(
-//             error.data,
-//             error.status,
-//             "REGISTER_FAIL"
-//           )
-//         );
-//         dispatch({
-//           type: REGISTER_FAIL,
-//         });
-//       });
-//   }
-// }
 export const register = ({ name, username, email, password }) => (
   dispatch
 ) => {
-  console.log("name: ", name)
-  console.log("username: ", username)
-  console.log("email: ", email)
-  console.log("password: ", password)
   // Headers
   const config = {
     headers: {
@@ -114,8 +70,6 @@ export const register = ({ name, username, email, password }) => (
 
 // Login User
 export const login = ({ username, password }) => (dispatch) => {
-  console.log("username: ", username);
-  console.log("password: ", password);
   // Headers
   const config = {
     headers: {

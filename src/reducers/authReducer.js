@@ -9,12 +9,20 @@ import {
   REGISTER_FAIL,
 } from "../constants/auth";
 
-const initialState = {
-  token: localStorage.getItem("token"),
-  isAuthenticated: null,
-  isLoading: false,
-  user: null
-};
+let user = JSON.parse(localStorage.getItem("user"))
+const initialState = user
+  ? {
+      token: localStorage.getItem("token"),
+      isAuthenticated: true,
+      isLoading: false,
+      user: user,
+    }
+  : {
+      token: localStorage.getItem("token"),
+      isAuthenticated: null,
+      isLoading: false,
+      user: null,
+    };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -25,6 +33,8 @@ const authReducer = (state = initialState, action) => {
       };
 
     case USER_LOADED:
+      console.log("in reducer: ", action.payload);
+      console.log("in reducer auth: ", localStorage.getItem("user"))
       return {
         ...state,
         isAuthenticated: true,
@@ -35,6 +45,8 @@ const authReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      // console.log("in reducer: ", action.payload.user)
       return {
         ...state,
         ...action.payload,
@@ -47,6 +59,8 @@ const authReducer = (state = initialState, action) => {
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      console.log("logout success")
       return {
         ...state,
         token: null,

@@ -5,11 +5,11 @@ import AppNavbar from './components/AppNavbar';
 import ShoppingList from './components/ShoppingList';
 import { loadUser } from "./actions/authActions";
 
-
-function App() {
+function App({ isLoggedIn }) {
   useEffect(() => {
-    loadUser();
-  }, [])
+    console.log(isLoggedIn);
+    loadUser()
+  }, []);
 
   return (
     <div>
@@ -19,8 +19,12 @@ function App() {
   );
 }
 
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.authReducer.user
+});
+
 const mapDispatchToProps = (dispatch) => ({
   loadUser: () => dispatch(loadUser()),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
