@@ -12,18 +12,21 @@ import {
 export const getAllUsers = () => {
   return (dispatch, getState) => {
     console.log("in users actions")
+    console.log(tokenConfig(getState));
     // User loading
     dispatch({ type: GET_ALL_USERS_LOADING });
 
     axios
       .get(`${backendHost}/api/users`, tokenConfig(getState))
       .then((res) =>
+      // console.log(res)
         dispatch({
           type: GET_ALL_USERS_SUCCESS,
           payload: res.data,
         })
       )
       .catch((error) => {
+        console.log(error)
         dispatch(returnErrors(error.response.data, error.response.status));
         dispatch({
           type: GET_ALL_USERS_FAIL,
@@ -47,6 +50,7 @@ export const tokenConfig = getState => {
   // If token, add to headers
   if (token) {
     config.headers["x-auth-token"] = token;
+    // config.headers["Authorization"] = "Bearer " + token;
   }
 
   return config;
