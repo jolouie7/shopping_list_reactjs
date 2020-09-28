@@ -5,26 +5,19 @@ import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
 
 import { getItems, deleteItem } from "../actions/itemActions";
-import ItemModal from "./itemModal"
+import ItemModal from "./itemModal";
 
-const ShoppingList = ({getItems, items, deleteItem}) => {
-
+const ShoppingList = ({ getItems, items, deleteItem, isAuthenticated }) => {
   useEffect(() => {
     getItems();
   }, [items.items, getItems]);
 
-  // const handleClick = () => {
-  //   const name = prompt("Enter Item");
-  //   if (name) {
-  //     setItems([...items, { id: uuidv4(), name }]);
-  //   }
-  // };
-
   const handleClickDelete = (id) => {
     deleteItem(id);
-  }
+  };
 
   const listItems = items.items;
+  
   return (
     <div>
       <Container>
@@ -34,7 +27,7 @@ const ShoppingList = ({getItems, items, deleteItem}) => {
             <tr>
               <th>#</th>
               <th>Item Name</th>
-              <th>Delete Item?</th>
+              {isAuthenticated && <th>Delete Item?</th>}
             </tr>
           </thead>
           <tbody>
@@ -42,14 +35,16 @@ const ShoppingList = ({getItems, items, deleteItem}) => {
               <tr key={item._id}>
                 <td>{item._id}</td>
                 <td>{item.name}</td>
-                <td>
-                  <Button
-                    variant="danger"
-                    onClick={() => handleClickDelete(item._id)}
-                  >
-                    Delete
-                  </Button>
-                </td>
+                {isAuthenticated && (
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleClickDelete(item._id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -61,6 +56,7 @@ const ShoppingList = ({getItems, items, deleteItem}) => {
 
 const mapStateToProps = (state) => ({
   items: state.itemReducer,
-})
+  isAuthenticated: state.authReducer.isAuthenticated,
+});
 
 export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);

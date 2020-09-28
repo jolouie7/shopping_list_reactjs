@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 
 import { addItem } from "../actions/itemActions";
 
-function ItemModal(props) {
+function ItemModal({addItem, isAuthenticated}) {
   const [name, setName] = useState("");
   const [show, setShow] = useState(false);
 
@@ -21,7 +21,7 @@ function ItemModal(props) {
     };
 
     // Add item using addItem action
-    props.addItem(newItem);
+    addItem(newItem);
 
     // Close modal
     handleClose();
@@ -35,10 +35,13 @@ function ItemModal(props) {
   };
 
   return (
-    <>
-      <Button variant="outline-dark" onClick={handleShow}>
+    <div>
+      {isAuthenticated ?
+      <Button variant="dark" onClick={handleShow} className="my-4">
         Add Item
-      </Button>
+      </Button> :
+      <h4 className="my-3">Please login to manage items</h4>
+      }
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -68,8 +71,12 @@ function ItemModal(props) {
           </Form>
         </Modal.Body>
       </Modal>
-    </>
+    </div>
   );
 }
 
-export default connect(null, { addItem })(ItemModal);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { addItem })(ItemModal);
