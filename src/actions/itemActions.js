@@ -1,68 +1,62 @@
+// tokenConfig(getState), is attaching the token to the request in the header
+import axios from "axios";
+
 import {
   GET_ITEMS,
   ADD_ITEM,
   DELETE_ITEM,
   ITEMS_LOADING,
 } from "../constants/items";
-
 import backendHost from "../constants/api-config";
+import { tokenConfig } from "./authActions";
+import { returnErrors } from "./errorActions";
 
 export const getItems = () => {
   return (dispatch) => {
     dispatch(setItemsLoading());
-    fetch(`${backendHost}/api/items`)
-      .then((res) => res.json())
-      .then((data) =>
+    axios.get(`${backendHost}/api/items`)
+      .then((res) =>
         dispatch({
           type: GET_ITEMS,
-          payload: data,
+          payload: res.data,
         })
       )
       .catch((error) => {
-        console.error("Error:", error);
+        dispatch(returnErrors(error.response.data, error.response.status));
       });
   }
 }
 
 export const addItem = (item) => {
-  return (dispatch) => {
-    fetch(`${backendHost}/api/items`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    })
-      .then((res) => res.json())
-      .then((data) =>
+  return (dispatch, getState) => {
+    axios
+      // tokenConfig(getState), is attaching the token to the request in the header
+      .post(`${backendHost}/api/items`, item, tokenConfig(getState))
+      .then((res) =>
         dispatch({
           type: ADD_ITEM,
-          payload: data,
+          payload: res.data,
         })
       )
       .catch((error) => {
-        console.error("Error:", error);
+        dispatch(returnErrors(error.response.data, error.response.status));
       });
-  }
+  };
 }
 
 export const deleteItem = (id) => {
-  return (dispatch) => {
-    fetch(`${backendHost}/api/items/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) =>
+  return (dispatch, getState) => {
+    // tokenConfig(getState), is attaching the token to the request in the header
+    axios
+      .delete(`${backendHost}/api/items/${id}`, tokenConfig(getState))
+      .then((res) =>
         dispatch({
           type: DELETE_ITEM,
-          payload: data,
+          payload: res.data,
         })
       )
       .catch((error) => {
-        console.error("Error:", error);
+        dispatch(returnErrors(error.response.data, error.response.status));
       });
   };
 }

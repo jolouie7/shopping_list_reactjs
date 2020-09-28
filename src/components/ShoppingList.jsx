@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 
 import { getItems, deleteItem } from "../actions/itemActions";
 import ItemModal from "./itemModal"
@@ -12,7 +11,7 @@ const ShoppingList = ({getItems, items, deleteItem}) => {
 
   useEffect(() => {
     getItems();
-  }, [getItems]);
+  }, [items.items, getItems]);
 
   // const handleClick = () => {
   //   const name = prompt("Enter Item");
@@ -59,11 +58,6 @@ const ShoppingList = ({getItems, items, deleteItem}) => {
     </div>
   );
 };
-
-ShoppingList.propTypes = {
-  getItems: PropTypes.func.isRequired,
-  items: PropTypes.object.isRequired
-}
 
 const mapStateToProps = (state) => ({
   items: state.itemReducer,
