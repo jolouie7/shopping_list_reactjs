@@ -25,7 +25,7 @@ const ShoppingList = ({ getItems, items, deleteItem, isAuthenticated }) => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>#</th>
+              {/* <th>#</th> */}
               <th>Item Name</th>
               {isAuthenticated && <th>Delete Item?</th>}
             </tr>
@@ -33,7 +33,7 @@ const ShoppingList = ({ getItems, items, deleteItem, isAuthenticated }) => {
           <tbody>
             {listItems.map((item) => (
               <tr key={item._id}>
-                <td>{item._id}</td>
+                {/* <td>{item._id}</td> */}
                 <td>{item.name}</td>
                 {isAuthenticated && (
                   <td>
